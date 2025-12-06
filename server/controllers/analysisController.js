@@ -1,4 +1,4 @@
-import {OpenAI} from 'apenai';
+import {OpenAI} from 'openai';
 import { model } from 'mongoose';
 
 const client = new OpenAI({apiKey:process.env.OPENAI_API_KEY});
@@ -8,14 +8,14 @@ export const analyzeResume = async(req,res)=>{
         const path = req.file.path;
 
         const response = await client.chat.completions.create({
-            model: "gpt-5-nano",
-            message: [
+            model: "gpt-4-mini",
+            messages: [
                 {role:"system", content:"You are a resume analysis AI."},
                 {role: "user", content:`Analyze this resume file path: ${path}`}
             ]
         });
 
-        res.json({analysis:response.choices[0].message.content});
+        res.json({analysis:response.choices[0].messages.content});
         
     } catch (err) {
         res.status(500).json({error:err.message});
