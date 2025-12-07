@@ -1,5 +1,4 @@
 import {OpenAI} from 'openai';
-import { model } from 'mongoose';
 
 const client = new OpenAI({apiKey:process.env.OPENAI_API_KEY});
 
@@ -15,7 +14,7 @@ export const analyzeResume = async(req,res)=>{
             ]
         });
 
-        res.json({analysis:response.choices[0].messages.content});
+        res.json({analysis:response.choices[0].message.content});
         
     } catch (err) {
         res.status(500).json({error:err.message});
